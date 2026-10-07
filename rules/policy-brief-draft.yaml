@@ -1,0 +1,193 @@
+# 政策专报要素核对 规则库
+#
+# 规则数据与代码分离：替换本文件即可切换规则集版本，无需改动 TypeScript。
+#
+# 条款引用纪律（由 shared/ruleset.ts 强制校验）：
+#   - 每条规则必须写全 document / number / clause / excerpt / kind / source，
+#     且 excerpt 必须是逐字摘录，不得改写。
+#   - kind: direct                       条款直接规定了所检查的要求
+#   - kind: derived-from-principle       条款未直接规定，仅能由原则性条款推论（severity 最多 warn）
+#   - kind: institutional-configuration 阈值出自本机构配置（severity 最多 info）
+#
+# ⚠️⚠️ 本规则库的诚实说明：**excerpt 一律不是引文。**
+#   本插件核对的是"政策专报（或研究报告）要素核对表"的**齐备性与数据新鲜度**：
+#     每节是否写明核心观点、是否有支撑依据、依据是否注明出处、
+#     数据截止日期是否可解析且不晚于成文日、距核对日是否超过配置窗口、
+#     建议事项是否写明实施主体、专报是否声明标题与报送对象、章节号是否唯一。
+#   其规范载体是**《党政机关公文处理工作条例》（中办发〔2012〕14号）**中关于报告类文种的要求
+#   与各单位的调研报告编写规范。**核查未取得这些文件的逐字条文**，
+#   故每条 excerpt 如实写明，kind 降为 derived-from-principle（封顶 warn）。
+#
+# ⚠️⚠️ 另一条**必须保留**的边界：**本插件绝不判定观点是否正确、
+#   依据是否充分、建议是否可行、数据是否可靠、专报是否应当报送**。
+#   那是研究质量与决策价值的判断，也是本插件刻意不碰的部分。
+#   → 本插件只核对**要素齐备与自洽**，且**它看不到依据与数据的实体**：
+#     它只核对"是否注明了出处"，**不核对出处是否存在、数据是否与出处一致**。
+#   → **数据新鲜度窗口（maxDays）出厂为空**，未配置即 skipped。
+
+plugin: dsh-policy-brief-draft
+version: "2026.1"
+
+rules:
+  - id: PB-001
+    title: 每节都应写明核心观点
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: presence
+          field: point
+          fix: 补填核心观点；本条只核对是否写明，不判断观点是否成立
+    note: >-
+      专报的价值在于**观点明确**：一节只罗列材料而没有观点，读者无法判断你想说什么。
+      本次未取得明文条号，故封顶 warn。
+      本条只核对观点栏是否填写，**不判断该观点是否正确、是否有新意**。
+
+  - id: PB-002
+    title: 每个观点都应有支撑依据
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: presence
+          field: evidence
+          fix: 补填支撑依据；本条只核对是否写明，不判断依据是否充分
+    note: >-
+      观点若无依据，专报就退化成意见表达，无法支撑决策。本次未取得明文条号，故封顶 warn。
+      ⚠️ 本条只核对依据栏是否填写，**不判断该依据是否充分、是否真实、是否支持该观点**。
+
+  - id: PB-003
+    title: 依据应注明出处
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于引用与数据来源的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: presence
+          field: sourceRef
+          fix: 补填依据出处；本条只核对是否注明，不核对出处是否真实存在
+    note: >-
+      出处是可复核性的入口：读者据此回到数据本身。本次未取得明文条号，故封顶 warn。
+      ⚠️ **本条只核对"是否注明了出处"**——它看不到被引用的文件，
+      **因此它不能核对出处是否存在、数据是否与出处一致**。这是它最重要的能力边界。
+
+  - id: PB-004
+    title: 数据截止日期应可解析且不晚于核对日
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: noFutureDate
+          field: dataAsOf
+    note: >-
+      数据截止日期晚于核对日，说明日期填错了，或者引用了尚未产生的数据。
+      本次未取得明文条号，故封顶 warn。
+      本条识别 2026-03-15 与 2026-03-15 09:30 两种写法；无法解析时会单独报出，**不会静默跳过**。
+
+  - id: PB-005
+    title: 数据新鲜度应符合本机构编辑口径
+    severity: info
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: dataAge
+          field: dataAsOf
+          maxDays: 0
+    note: >-
+      maxDays 出厂为 0，表示**未配置**，本条进 skipped。
+      依据说明：**"数据多旧算过时"是本机构的编辑口径**，
+      快报类专报可能要求用上月数据，年度分析自然引用当年数据，
+      本插件**不硬编码任何天数**。配置示例：maxDays: 90。
+      本条命中只表示"数据比你配置的窗口更旧"，**不表示数据不可用**——
+      引用旧数据有时是必要的，此时应在备注里说明原因。
+
+  - id: PB-006
+    title: 建议事项应写明实施主体
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: conditionalPresence
+          conditionField: recommendation
+          requiredFields: ["implementer"]
+          conditionValues: []
+    note: >-
+      建议若不说由谁实施，就只能停在纸面上——**这是专报能不能落地的分水岭**。
+      本次未取得明文条号，故封顶 warn。
+      本条**只在建议栏已填写时**要求实施主体栏，避免对"本节是现状分析、不提建议"的情况报差异。
+      本条只核对实施主体是否填写，**不判断该建议是否可行、主体是否恰当**。
+
+  - id: PB-007
+    title: 专报应声明标题与报送对象
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于公文格式要素的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: headerPresence
+          fields: ["title","recipient"]
+    note: >-
+      专报若不写明标题与报送对象，就无法确认这份材料是报给谁的、主题是什么。
+      本次未取得明文条号，故封顶 warn。
+      配置项 title 对应专报标题，recipient 对应报送对象。
+      若本机构表式还在表头记录密级或专题，把它们加进 fields 即可。
+
+  - id: PB-008
+    title: 要点序号不应在表内重复
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（本次未取得条文）
+      clause: 关于报告类文种结构的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得该文件的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+        check:
+          kind: unique
+          field: sectionNo
+    note: >-
+      序号唯一是"每个要点只被登记一次"的**前提条件**：序号重复会让评审意见无法准确指认要点。
+      本次未取得明文条号，故封顶 warn。比较时忽略空白字符。
+
+disabled: []

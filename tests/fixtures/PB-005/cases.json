@@ -1,0 +1,26 @@
+{
+  "ruleId": "PB-005",
+  "configure": {
+    "PB-005": {
+      "maxDays": 90
+    }
+  },
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "PB-005-compliant.json",
+      "expect": {
+        "ruleId": "PB-005",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "PB-005-unsafe.json",
+      "expect": {
+        "ruleId": "PB-005",
+        "count": 1
+      }
+    }
+  ]
+}
