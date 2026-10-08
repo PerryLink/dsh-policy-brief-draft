@@ -75,7 +75,6 @@ section — applies a versioned rule pack, and returns a report.
 | `PB-006` | a recommendation names its implementer | warn | principle |
 | `PB-007` | the brief names its title and recipient | warn | principle |
 | `PB-008` | section numbers are unique | warn | principle |
-
 ## Install
 
 ```sh
