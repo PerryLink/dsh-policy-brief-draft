@@ -48,8 +48,7 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./*.tgz
+dsh plugin --profile <name> add dsh-policy-brief-draft
 dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 ```
 
