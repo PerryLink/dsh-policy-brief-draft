@@ -1,6 +1,6 @@
 {
   "name": "dsh-policy-brief-draft",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "政策专报要素核对（按观点、依据、出处与建议核对专报齐备，仅提示差异，不作出定性结论）",
   "type": "module",
   "main": "lib/index.mjs",
