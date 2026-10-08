@@ -1,4 +1,23 @@
-# dsh-policy-brief-draft
+# dsh-policy-brief-draft — Verificação dos elementos de um relatório de políticas
+
+`dsh-policy-brief-draft` lê uma lista de verificação dos elementos de um relatório de políticas (ou de um estudo) —o cabeçalho do documento mais uma linha por secção— e verifica a completude e a coerência interna dessa lista: se cada secção expõe o seu ponto, se um ponto tem evidência de apoio, se a evidência cita uma fonte, se a data-limite dos dados é analisável e não é posterior à data de revisão, se os dados caem dentro da janela de frescura que configurar, se uma recomendação nomeia quem a executaria, se o cabeçalho declara o título e o destinatário do relatório e se não há números de secção repetidos.
+
+## O que ele responde
+
+| Você pergunta | O que ele responde |
+|---|---|
+| Uma secção é só material e nenhuma conclusão: a coluna do ponto está vazia. | `PB-001` reporta essa secção, porque se espera que cada secção exponha o seu ponto. Verifica apenas que a célula `point` está preenchida, por isso não julga se o ponto está certo nem se acrescenta algo novo. A regra está limitada a `warn` porque o número do artigo não foi obtido. |
+| Preenchemos a coluna da evidência e a da fonte. O que é que a verificação confirma, afinal? | Apenas que ambas as células estão preenchidas. `PB-002` exige `evidence` para cada ponto e `PB-003` exige `sourceRef` ao lado dela. `PB-002` não julga se a evidência é suficiente, real ou se sustenta o ponto; `PB-003` não consegue verificar se a fonte existe nem se os dados coincidem com ela, porque o plugin lê a lista de verificação e nunca as fontes, pelo que uma citação inventada passa. |
+| A data-limite dos dados está escrita como `2026-03-15 09:30`, e uma secção tem uma data posterior a hoje. | As duas formas, `2026-03-15` e `2026-03-15 09:30`, são reconhecidas. `PB-004` reporta um `dataAsOf` posterior à data de revisão, ou seja, ou a data foi mal preenchida ou a secção cita dados que ainda não existem, e um valor que não consegue analisar é reportado à parte em vez de ser omitido em silêncio. Não julga se os dados são fiáveis. |
+| A regra de frescura reporta `skipped`. Isso significa que os dados estão bem? | Não. `PB-005` vem com `maxDays: 0`, ou seja, por configurar, por isso reporta-se em `skipped` em vez de inventar um número; configure `maxDays` (por exemplo `maxDays: 90`) para a ativar. Um achado significa então apenas que os dados são mais antigos do que a janela que definiu, nunca que sejam inutilizáveis, e citar dados antigos é por vezes correto, por isso diga porquê na observação. A regra é `info`. |
+| Uma secção apresenta uma recomendação mas não diz quem a executaria. | `PB-006` reporta essa secção: uma vez preenchida a célula `recommendation`, a célula `implementer` passa a ser exigida. Uma secção que apenas analisa a situação atual e não recomenda nada não é reportada, por isso a regra não incomoda as secções de diagnóstico. Verifica que o implementador é nomeado, não se a recomendação é viável nem se esse órgão é o adequado. |
+| O que deve o próprio relatório declarar, e pode o mesmo número de secção repetir-se? | `PB-007` exige que o cabeçalho declare `title` e `recipient`, e outros campos do cabeçalho, como a classificação ou o tema, podem ser acrescentados aos seus `fields` se o seu próprio formulário os registar. `PB-008` reporta um `sectionNo` que aparece duas vezes na tabela, ignorando espaços, porque um número repetido impede apontar um ponto sem ambiguidade. `PB-007` verifica apenas que essas células do cabeçalho estão preenchidas, não que o título seja acertado ou o destinatário o órgão certo, e `PB-008` compara apenas os números. |
+
+## Normas que segue
+
+| Documento | Número | Regras que o citam |
+|---|---|---|
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（本次未取得条文） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
 **Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
 each section states its point, that a point has supporting evidence, that the evidence cites a source, that the

@@ -1,4 +1,23 @@
-# dsh-policy-brief-draft
+# dsh-policy-brief-draft — Comprobación de los elementos de un informe de política
+
+`dsh-policy-brief-draft` lee una lista de verificación de elementos de un informe de política (o de un estudio) —la cabecera del documento más una fila por sección— y comprueba la completitud y la coherencia interna de esa lista: que cada sección exponga su punto, que un punto tenga evidencia de apoyo, que la evidencia cite una fuente, que la fecha de corte de los datos se pueda analizar y no sea posterior a la fecha de revisión, que los datos caigan dentro de la ventana de frescura que usted configure, que una recomendación nombre a quien la ejecutaría, que la cabecera declare el título y el destinatario del informe y que no se repita ningún número de sección.
+
+## Qué responde
+
+| Usted pregunta | Qué responde |
+|---|---|
+| Una sección es todo material y ninguna conclusión: la columna del punto está vacía. | `PB-001` informa de esa sección, porque se espera que cada sección exponga su punto. Solo comprueba que la celda `point` esté rellena, así que no juzga si el punto es correcto ni si aporta algo nuevo. La regla está limitada a `warn` porque no se obtuvo el número del artículo. |
+| Hemos rellenado la columna de la evidencia y la de la fuente. ¿Qué verifica realmente la comprobación? | Solo que ambas celdas estén rellenas. `PB-002` exige `evidence` para cada punto y `PB-003` exige `sourceRef` junto a ella. `PB-002` no juzga si la evidencia es suficiente, real o si sostiene el punto; `PB-003` no puede comprobar que la fuente exista ni que los datos coincidan con ella, porque el plugin lee la lista de verificación y nunca las fuentes, de modo que una cita inventada pasa. |
+| La fecha de corte de los datos figura como `2026-03-15 09:30`, y una sección lleva una fecha posterior a hoy. | Se reconocen las dos formas, `2026-03-15` y `2026-03-15 09:30`. `PB-004` informa de un `dataAsOf` posterior a la fecha de revisión, es decir, o la fecha se rellenó mal o la sección cita datos que aún no existen, y un valor que no puede analizar se informa por separado en lugar de omitirse en silencio. No juzga si los datos son fiables. |
+| La regla de frescura informa `skipped`. ¿Significa eso que los datos están bien? | No. `PB-005` viene con `maxDays: 0`, es decir, sin configurar, así que se informa a sí misma en `skipped` en lugar de inventar un número; configure `maxDays` (por ejemplo `maxDays: 90`) para activarla. Un hallazgo entonces solo significa que los datos son más antiguos que la ventana que usted fijó, nunca que sean inutilizables, y citar datos antiguos a veces es correcto, así que indique por qué en la observación. La regla es `info`. |
+| Una sección formula una recomendación pero no dice quién la llevaría a cabo. | `PB-006` informa de esa sección: una vez rellenada la celda `recommendation`, se exige la celda `implementer`. Una sección que solo analiza la situación actual y no propone nada no se informa, así que la regla no molesta a las secciones de diagnóstico. Comprueba que se nombre al implementador, no si la recomendación es viable ni si ese órgano es el adecuado. |
+| ¿Qué debe declarar el propio informe, y puede repetirse el mismo número de sección? | `PB-007` exige que la cabecera declare `title` y `recipient`, y pueden añadirse otros campos de cabecera, como la clasificación o el tema, a sus `fields` si su propio formulario los recoge. `PB-008` informa de un `sectionNo` que aparece dos veces en la tabla, ignorando los espacios, porque un número repetido impide señalar un punto sin ambigüedad. `PB-007` solo comprueba que esas celdas de cabecera estén rellenas, no que el título sea acertado o el destinatario el órgano correcto, y `PB-008` compara únicamente los números. |
+
+## Normas que sigue
+
+| Documento | Número | Reglas que lo citan |
+|---|---|---|
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（本次未取得条文） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
 **Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
 each section states its point, that a point has supporting evidence, that the evidence cites a source, that the
