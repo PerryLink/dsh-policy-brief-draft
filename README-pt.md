@@ -1,6 +1,14 @@
 # dsh-policy-brief-draft — Verificação dos elementos de um relatório de políticas
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-policy-brief-draft` lê uma lista de verificação dos elementos de um relatório de políticas (ou de um estudo) —o cabeçalho do documento mais uma linha por secção— e verifica a completude e a coerência interna dessa lista: se cada secção expõe o seu ponto, se um ponto tem evidência de apoio, se a evidência cita uma fonte, se a data-limite dos dados é analisável e não é posterior à data de revisão, se os dados caem dentro da janela de frescura que configurar, se uma recomendação nomeia quem a executaria, se o cabeçalho declara o título e o destinatário do relatório e se não há números de secção repetidos.
+
+## Como é a saída
+
+![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.png)
+
+Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não é uma simulação. O pacote de regras não inventa citações, por isso cada achado nomeia a cláusula aplicada e avisa que o seu texto não foi obtido.
 
 ## O que ele responde
 
