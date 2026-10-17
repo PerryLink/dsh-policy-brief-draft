@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.2.6 - 2026-10-17
+
+- Compatibility: declare `engines.dsh` `>=0.2.1-0 <0.3.0`; move `@deepseek-ai/dsh-*` devDependencies to `0.2.1-rc.2`; add `@deepseek-ai/dsh-working-directory`.
+- Docs: the compatibility table no longer claims `engines.dsh` is undeclared; drop the retired `both` tool mode.
+
+
+## 0.2.5
+
+- **The clause text is now in the rule pack, and the severities were re-derived from it.** The
+  regulation — 《党政机关公文处理工作条例》 (中办发〔2012〕14号) — was **already obtained in full on
+  2026-10-07** and its relevant articles were transcribed verbatim into
+  `rules/evidence/clause-verification.md`. What had never happened was the next step: **the `excerpt`
+  fields still carried the "本次未取得" placeholder and every rule stayed `derived-from-principle`.**
+  That gap is what this release closes.
+
+  The severities were applied **article by article**, not in bulk:
+
+  - **`warn` → `error`, and `kind` → `direct`, for three rules** where an article states the very thing
+    the check looks for: `PB-001` (19(3) 「观点鲜明」), `PB-003` (20(4) lists 「引文等是否准确」 among the
+    pre-issuance review points) and `PB-004` (19(2) 「分析问题实事求是」 with 20(4) 「时间」 — a data cutoff
+    after the review date cannot be true).
+  - **`PB-007` gains a real citation but keeps its `warn`**: article 9 governs the eighteen format
+    elements of a *formal document*, and this rule checks two columns of a working outline. Calling a
+    blank header cell a `direct` breach of article 9 would be exactly the over-claim this family exists
+    to avoid.
+  - **`PB-002`, `PB-006` and `PB-008` keep `warn`** because no article states their requirement — only
+    principles that imply it. `PB-005` is now `institutional-configuration` (its window is your
+    editorial rule; the regulation fixes no number of days).
+
+  Net effect: **3 `error`, 4 `warn`, 1 `info`**, still 8 rules across `PB-001`..`PB-008`.
+
+  New evidence file: `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`, which also records
+  **where this analysis disagrees with the earlier one** in `clause-verification.md` — the earlier
+  report argued against any `direct` upgrade on the ground that the regulation governs drafting while
+  the plugin checks a register. That argument holds for `PB-002`/`PB-006`/`PB-008` but not for 19(3) and
+  20(4), which are checkable review points rather than bare principles. All five READMEs were updated
+  together, which `check:readmes` requires.
+
 ## 0.2.4
 
 - Add a demo card to the README: one terminal shot of this plugin's real output
@@ -56,3 +94,4 @@
 - Five-language READMEs hold the same section count and the same configuration keys.
 - Rule pack: 8 rules across PB-001..PB-008.
 - Licensed Apache-2.0.
+

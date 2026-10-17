@@ -8,15 +8,15 @@
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.png)
 
-Real output from this plugin over its own `PB-001` test fixture — not a mock-up. The rule pack ships no invented quotations, so a finding names both the clause it applied and the fact that the clause text was not obtained.
+Real output from this plugin over its own `PB-001` test fixture — not a mock-up. The rule pack ships no invented quotations: every finding names the article it applied, and every `excerpt` is now a verbatim quotation from a document this repository has read.
 
 ## What it answers
 
 | You ask | What it answers |
 |---|---|
-| One section is all material and no conclusion: the point column is empty. | `PB-001` reports that section, because every section is expected to state its point. It checks only that the `point` cell is filled, so it does not judge whether the point is right or whether it says anything new. The rule is capped at `warn` because the clause number was not obtained. |
-| We filled in the evidence column and the source column. What does the check actually verify? | Only that both cells are filled. `PB-002` requires `evidence` for every point and `PB-003` requires `sourceRef` beside it. `PB-002` does not judge whether the evidence is sufficient, real, or actually supports the point; `PB-003` cannot check that the source exists or that the figures match it, because the plugin reads the checklist and never the sources, so a fabricated citation passes. |
-| The data cutoff reads `2026-03-15 09:30`, and one section carries a date later than today. | Both `2026-03-15` and `2026-03-15 09:30` are read. `PB-004` reports a `dataAsOf` that falls after the review date, meaning either the date was filled in wrongly or the section cites data that does not exist yet, and a value it cannot parse is reported on its own instead of being silently skipped. It does not judge whether the data itself is reliable. |
+| One section is all material and no conclusion: the point column is empty. | `PB-001` reports that section, because every section is expected to state its point. It checks only that the `point` cell is filled, so it does not judge whether the point is right or whether it says anything new. It is an `error`: article 19(3) requires 「观点鲜明」, and that article was read verbatim on 2026-10-13. |
+| We filled in the evidence column and the source column. What does the check actually verify? | Only that both cells are filled. `PB-002` requires `evidence` for every point and `PB-003` requires `sourceRef` beside it. `PB-003` is an `error`, because article 20(4) lists 「引文等是否准确」 among the review points before a document is issued; `PB-002` stays a `warn`, because no article requires one citation per point. `PB-002` does not judge whether the evidence is sufficient, real, or actually supports the point; `PB-003` cannot check that the source exists or that the figures match it, because the plugin reads the checklist and never the sources, so a fabricated citation passes. |
+| The data cutoff reads `2026-03-15 09:30`, and one section carries a date later than today. | Both `2026-03-15` and `2026-03-15 09:30` are read. `PB-004` reports a `dataAsOf` that falls after the review date, meaning either the date was filled in wrongly or the section cites data that does not exist yet, and a value it cannot parse is reported on its own instead of being silently skipped. It is an `error`: article 19(2) requires 「分析问题实事求是」 and article 20(4) requires 「时间」 to be accurate, and a cutoff after the review date cannot be true. It does not judge whether the data itself is reliable. |
 | The freshness rule reports `skipped`. Does that mean the data is fine? | No. `PB-005` ships with `maxDays: 0`, which means unconfigured, so it reports itself in `skipped` rather than inventing a number; set `maxDays` (for example `maxDays: 90`) to switch it on. A hit then means only that the data is older than the window you set, never that it is unusable, and citing older data is sometimes right, so say why in the remark. The rule is `info`. |
 | A section makes a recommendation but never says who would carry it out. | `PB-006` reports that section: once the `recommendation` cell is filled, the `implementer` cell is required. A section that only analyses the current situation and makes no recommendation is not reported, so the rule does not nag status-only sections. It checks that the implementer is named, not whether the recommendation is feasible or that body the right one. |
 | What must the brief itself declare, and may the same section number appear twice? | `PB-007` requires the header to declare both `title` and `recipient`, and further header fields such as classification or topic can be added to its `fields` if your own form records them. `PB-008` reports a `sectionNo` that appears twice in the table, ignoring whitespace, because a repeated number stops a reviewer from pointing at one point unambiguously. `PB-007` checks only that those header cells are filled, not that the title is apt or the recipient the right body, and `PB-008` compares the numbers alone. |
@@ -25,7 +25,7 @@ Real output from this plugin over its own `PB-001` test fixture — not a mock-u
 
 | Document | Number | Cited by rules |
 |---|---|---|
-| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（本次未取得条文） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（全文已取得，逐字回填至各条 `excerpt`） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
 **Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
 each section states its point, that a point has supporting evidence, that the evidence cites a source, that the
@@ -47,11 +47,25 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 > brief a superior body), article 19 (drafting: 「分析问题实事求是」「所提政策措施和办法切实可行」「观点鲜明」)
 > and article 20(4), which lists 「引文等是否准确」 as a review point before issuance.
 >
-> **The rule `excerpt` fields still say "本次未取得", and every rule remains `warn` or `info`.** The regulation
-> governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline* records its
-> points, evidence, sources and recommendations. Calling a blank column a `direct` breach of 「观点鲜明」 would
-> dress a register gap up as a regulatory one — the over-claim this family exists to avoid. Half the rules rest
-> on your own editorial conventions in any case.
+> **The clause text is now in the pack, and the severities were re-derived from it (2026-10-13).** The
+> regulation governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline*
+> records its points, evidence, sources and recommendations. Those are two different things, so the rule was
+> applied article by article rather than in bulk:
+>
+> - **Raised to `error`** where an article states the requirement the check looks for: `PB-001` (19(3)
+>   「观点鲜明」), `PB-003` (20(4) lists 「引文等是否准确」 as a pre-issuance review point) and `PB-004`
+>   (19(2) 「分析问题实事求是」 with 20(4) 「时间」 — a cutoff after the review date cannot be true).
+> - **Left at `warn` even though the text was obtained**, because the article is about something else:
+>   `PB-002` (no article requires one citation per point), `PB-006` (none requires naming an implementer),
+>   `PB-008` (none requires unique section numbers), and **`PB-007`**, whose article 9 governs the eighteen
+>   format elements of a formal document rather than two columns of a working outline — calling a blank header
+>   cell a `direct` breach of article 9 would dress a register gap up as a regulatory one.
+> - **Still `info`**: `PB-005`, whose window is your editorial convention and is not in the regulation at all.
+>
+> So **3 rules are `error`, 4 are `warn` and 1 is `info`** — the split is the point, not a compromise:
+> obtaining a text licenses a `direct` citation only where the text actually says the thing being checked.
+> See `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`, which also records where it disagrees with
+> the earlier analysis in `clause-verification.md`.
 >
 > **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
 > demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
@@ -63,10 +77,10 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 
 | Surface | Status |
 |---|---|
-| Harness | Peer range `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — verified to accept both `0.2.0-rc.2` and `0.2.1-alpha.1`. `engines.dsh` is deliberately not declared: it has no reader and cannot reject a host |
+| Harness | Peer range `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — verified to accept both `0.2.0-rc.2` and `0.2.1-rc.2`. `engines.dsh` is declared as `>=0.2.1-0 <0.3.0` and is enforced by the host since 0.2.1 |
 | Node | `^22.19.0 || >=24.0.0` |
 | Platforms | All (plain ESM; no native code, no network, no model call) |
-| Tool mode | Works in `native`, `ptc` and `both`; for a long brief use `ptc` |
+| Tool mode | Works in `native` and `ptc`; for a long brief use `ptc` |
 
 ## What it does
 
@@ -75,13 +89,13 @@ section — applies a versioned rule pack, and returns a report.
 
 | Rule | Check | Severity | Basis kind |
 |---|---|---|---|
-| `PB-001` | each section states its point | warn | principle |
+| `PB-001` | each section states its point | error | direct |
 | `PB-002` | each point has supporting evidence | warn | principle |
-| `PB-003` | the evidence cites a source | warn | principle |
-| `PB-004` | the data date parses and is not in the future | warn | principle |
+| `PB-003` | the evidence cites a source | error | direct |
+| `PB-004` | the data date parses and is not in the future | error | direct |
 | `PB-005` | the data is fresh enough under your window (off by default) | info | local |
 | `PB-006` | a recommendation names its implementer | warn | principle |
-| `PB-007` | the brief names its title and recipient | warn | principle |
+| `PB-007` | the brief names its title and recipient | warn | direct |
 | `PB-008` | section numbers are unique | warn | principle |
 ## Install
 

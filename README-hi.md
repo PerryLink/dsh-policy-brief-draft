@@ -8,16 +8,16 @@
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.png)
 
-इस प्लगइन का अपने ही `PB-001` टेस्ट फ़िक्स्चर पर वास्तविक आउटपुट — कोई नकली चित्र नहीं। नियम-पैक उद्धरण नहीं गढ़ता, इसलिए हर निष्कर्ष लागू किए गए खंड का नाम और यह भी बताता है कि उसका मूल पाठ इस बार प्राप्त नहीं हुआ।
+इस प्लगइन का अपने ही `PB-001` टेस्ट फ़िक्स्चर पर वास्तविक आउटपुट — कोई नकली चित्र नहीं। नियम-पैक उद्धरण नहीं गढ़ता: हर निष्कर्ष लागू किए गए अनुच्छेद का नाम देता है, और हर `excerpt` अब इस रिपॉज़िटरी द्वारा पढ़े गए दस्तावेज़ का शब्दशः उद्धरण है।
 
 ## यह किन सवालों का जवाब देता है
 
 | आपका सवाल | इसका जवाब |
 |---|---|
-| एक खंड में केवल सामग्री है, कोई निष्कर्ष नहीं — मुख्य बिंदु का कॉलम खाली है। | `PB-001` उस खंड को दर्ज करता है, क्योंकि प्रत्येक खंड में अपना मुख्य बिंदु लिखा होना अपेक्षित है। यह केवल देखता है कि `point` सेल भरा है, इसलिए यह नहीं आँकता कि बिंदु सही है या उसमें कुछ नया है। अनुच्छेद का संख्यांक न मिलने के कारण यह नियम `warn` तक सीमित है। |
-| हमने आधार और स्रोत, दोनों कॉलम भर दिए हैं — जाँच असल में क्या जाँचती है? | केवल यह कि दोनों सेल भरे हैं। `PB-002` हर बिंदु के लिए `evidence` की अपेक्षा करता है और `PB-003` उसके साथ `sourceRef` की। `PB-002` यह नहीं आँकता कि आधार पर्याप्त है, सच है या उस बिंदु का समर्थन करता है; `PB-003` यह नहीं देख सकता कि स्रोत मौजूद है या आँकड़े उससे मेल खाते हैं, क्योंकि प्लगिन चेकलिस्ट पढ़ता है और स्रोत कभी नहीं, इसलिए गढ़ा हुआ स्रोत भी पास हो जाता है। |
-| डेटा की अंतिम तिथि `2026-03-15 09:30` लिखी है, और एक खंड में आज के बाद की तिथि है। | `2026-03-15` और `2026-03-15 09:30`, दोनों रूप पढ़े जाते हैं। `PB-004` जाँच की तिथि के बाद की `dataAsOf` दर्ज करता है, यानी या तो तिथि गलत भरी गई है या खंड ऐसे आँकड़ों का हवाला दे रहा है जो अभी बने ही नहीं, और जो मान पढ़ा न जा सके वह अलग से दर्ज होता है, चुपचाप छोड़ा नहीं जाता। आँकड़े भरोसेमंद हैं या नहीं, यह नहीं आँकता। |
-| ताज़गी वाला नियम `skipped` दर्ज कर रहा है। क्या इसका मतलब डेटा ठीक है? | नहीं। `PB-005` में `maxDays: 0` लिखा आता है, यानी कॉन्फ़िगर नहीं किया गया, इसलिए वह कोई संख्या गढ़ने के बजाय स्वयं को `skipped` में दर्ज करता है; चालू करने के लिए `maxDays` सेट करें (उदाहरण `maxDays: 90`)। तब किसी निष्कर्ष का अर्थ केवल इतना है कि डेटा आपकी तय की गई विंडो से पुराना है, यह कभी नहीं कि वह अनुपयोगी है, और पुराने आँकड़ों का हवाला देना कभी-कभी उचित होता है, इसलिए कारण टिप्पणी में लिखें। यह नियम `info` है। |
+| एक खंड में केवल सामग्री है, कोई निष्कर्ष नहीं — मुख्य बिंदु का कॉलम खाली है। | `PB-001` उस खंड को दर्ज करता है, क्योंकि प्रत्येक खंड में अपना मुख्य बिंदु लिखा होना अपेक्षित है। यह केवल देखता है कि `point` सेल भरा है, इसलिए यह नहीं आँकता कि बिंदु सही है या उसमें कुछ नया है। यह `error` है: अनुच्छेद 19(3) 「观点鲜明」 की अपेक्षा करता है, और वह अनुच्छेद 2026-10-13 को शब्दशः पढ़ा गया। |
+| हमने आधार और स्रोत, दोनों कॉलम भर दिए हैं — जाँच असल में क्या जाँचती है? | केवल यह कि दोनों सेल भरे हैं। `PB-002` हर बिंदु के लिए `evidence` की अपेक्षा करता है और `PB-003` उसके साथ `sourceRef` की। `PB-003` `error` है, क्योंकि अनुच्छेद 20(4) जारी करने से पहले की समीक्षा में 「引文等是否准确」 को शामिल करता है; `PB-002` `warn` ही रहता है, क्योंकि कोई अनुच्छेद हर बिंदु के लिए एक उद्धरण की अपेक्षा नहीं करता। `PB-002` यह नहीं आँकता कि आधार पर्याप्त है, सच है या उस बिंदु का समर्थन करता है; `PB-003` यह नहीं देख सकता कि स्रोत मौजूद है या आँकड़े उससे मेल खाते हैं, क्योंकि प्लगिन चेकलिस्ट पढ़ता है और स्रोत कभी नहीं, इसलिए गढ़ा हुआ स्रोत भी पास हो जाता है। |
+| डेटा की अंतिम तिथि `2026-03-15 09:30` लिखी है, और एक खंड में आज के बाद की तिथि है। | `2026-03-15` और `2026-03-15 09:30`, दोनों रूप पढ़े जाते हैं। `PB-004` जाँच की तिथि के बाद की `dataAsOf` दर्ज करता है, यानी या तो तिथि गलत भरी गई है या खंड ऐसे आँकड़ों का हवाला दे रहा है जो अभी बने ही नहीं, और जो मान पढ़ा न जा सके वह अलग से दर्ज होता है, चुपचाप छोड़ा नहीं जाता। यह `error` है: अनुच्छेद 19(2) 「分析问题实事求是」 की और अनुच्छेद 20(4) 「时间」 की सटीकता की अपेक्षा करता है, और समीक्षा-तिथि के बाद की कट-off तिथि सच नहीं हो सकती। आँकड़े भरोसेमंद हैं या नहीं, यह नहीं आँकता। |
+| ताज़गी वाला नियम `skipped` दर्ज कर रहा है। क्या इसका मतलब डेटा ठीक है? | नहीं। `PB-005` में `maxDays: 0` लिखा आता है, यानी कॉन्फ़िगर नहीं किया गया, इसलिए वह कोई संख्या गढ़ने के बजाय स्वयं को `skipped` में दर्ज करता है; चालू करने के लिए `maxDays` सेट करें (उदाहरण `maxDays: 90`)। तब किसी निष्कर्ष का अर्थ केवल इतना है कि डेटा आपकी तय की गई विंडो से पुराना है, यह कभी नहीं कि वह अनुपयोगी है, और पुराने आँकड़ों का हवाला देना कभी-कभी उचित होता है, इसलिए कारण टिप्पणी में लिखें। यह नियम `info` है: इसकी दिन-विंडो आपकी संपादकीय परिपाटी से आती है और विनियम कोई दिन-संख्या तय नहीं करता। |
 | एक खंड में सिफ़ारिश लिखी है, पर यह नहीं कि उसे कौन लागू करेगा। | `PB-006` उस खंड को दर्ज करता है: `recommendation` सेल भरा होने पर `implementer` सेल अपेक्षित हो जाता है। जो खंड केवल वर्तमान स्थिति का विश्लेषण करता है और कोई सिफ़ारिश नहीं देता, वह दर्ज नहीं होता, इसलिए यह नियम ऐसे खंडों को परेशान नहीं करता। यह देखता है कि कार्यान्वयनकर्ता लिखा है, यह नहीं कि सिफ़ारिश व्यावहारिक है या वह निकाय उपयुक्त है। |
 | ब्रीफ़ को स्वयं क्या घोषित करना होता है, और एक ही खंड संख्या दो बार आ सकती है? | `PB-007` अपेक्षा करता है कि हेडर में `title` और `recipient` दोनों दर्ज हों, और यदि आपके फ़ॉर्म में गोपनीयता श्रेणी या विषय भी दर्ज होता है तो उन्हें उसके `fields` में जोड़ा जा सकता है। `PB-008` तालिका में दो बार आई `sectionNo` दर्ज करता है, तुलना करते समय खाली जगह छोड़ दी जाती है, क्योंकि दोहराई गई संख्या से किसी एक बिंदु की ओर ठीक से इशारा नहीं किया जा सकता। `PB-007` केवल यह देखता है कि हेडर की वे सेल भरी हैं, यह नहीं कि शीर्षक उपयुक्त है या प्राप्तकर्ता सही निकाय है, और `PB-008` केवल संख्याओं की तुलना करता है। |
 
@@ -25,7 +25,7 @@
 
 | दस्तावेज़ | संख्यांक | इन्हें उद्धृत करने वाले नियम |
 |---|---|---|
-| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（本次未取得条文） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（全文已取得，逐字回填至各条 `excerpt`） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
 **Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
 each section states its point, that a point has supporting evidence, that the evidence cites a source, that the
@@ -47,11 +47,31 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 > brief a superior body), article 19 (drafting: 「分析问题实事求是」「所提政策措施和办法切实可行」「观点鲜明」)
 > and article 20(4), which lists 「引文等是否准确」 as a review point before issuance.
 >
-> **The rule `excerpt` fields still say "本次未取得", and every rule remains `warn` or `info`.** The regulation
-> governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline* records its
-> points, evidence, sources and recommendations. Calling a blank column a `direct` breach of 「观点鲜明」 would
-> dress a register gap up as a regulatory one — the over-claim this family exists to avoid. Half the rules rest
-> on your own editorial conventions in any case.
+> **The clause text is now in the pack, and the severities were re-derived from it (2026-10-13).** The
+> regulation governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline*
+> records its points, evidence, sources and recommendations. Those are two different things, so the rule was
+> applied article by article rather than in bulk:
+>
+> - **Raised to `error`** where an article states the requirement the check looks for: `PB-001` (19(3)
+>   「观点鲜明」), `PB-003` (20(4) lists 「引文等是否准确」 as a pre-issuance review point) and `PB-004`
+>   (19(2) 「分析问题实事求是」 with 20(4) 「时间」 — a cutoff after the review date cannot be true).
+> - **Left at `warn` even though the text was obtained**, because the article is about something else:
+>   `PB-002` (no article requires one citation per point), `PB-006` (none requires naming an implementer),
+>   `PB-008` (none requires unique section numbers), and **`PB-007`**, whose article 9 governs the eighteen
+>   format elements of a formal document rather than two columns of a working outline — calling a blank header
+>   cell a `direct` breach of article 9 would dress a register gap up as a regulatory one.
+> - **Still `info`**: `PB-005`, whose window is your editorial convention and is not in the regulation at all.
+>
+> So **3 rules are `error`, 4 are `warn` and 1 is `info`** — the split is the point, not a compromise:
+> obtaining a text licenses a `direct` citation only where the text actually says the thing being checked.
+> See `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`, which also records where it disagrees with
+> the earlier analysis in `clause-verification.md`.
+>
+> **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
+> demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
+> `maxDays` starts at `0` and the rule reports itself in `skipped` rather than inventing a number. A finding
+> there means "older than the window you set", never "unusable"; citing older data is sometimes right, and the
+> fix is to say why in the remark.
 >
 > **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
 > demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
@@ -63,10 +83,10 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 
 | सतह | स्थिति |
 |---|---|
-| Harness | peer रेंज `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — `0.2.0-rc.2` और `0.2.1-alpha.1` दोनों को स्वीकार करने के लिए सत्यापित। **`engines.dsh` जानबूझकर घोषित नहीं**: इसका कोई पाठक नहीं और यह किसी होस्ट को अस्वीकार नहीं कर सकता |
+| Harness | peer रेंज `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — `0.2.0-rc.2` और `0.2.1-rc.2` दोनों को स्वीकार करने के लिए सत्यापित। **`engines.dsh` `>=0.2.1-0 <0.3.0` के रूप में घोषित है** और 0.2.1 से होस्ट इसे लागू करता है |
 | Node | `^22.19.0 || >=24.0.0` |
 | प्लेटफ़ॉर्म | सभी (शुद्ध ESM; कोई नेटिव कोड नहीं, कोई नेटवर्क नहीं, कोई मॉडल कॉल नहीं) |
-| टूल मोड | `native`, `ptc` और `both` में काम करता है; पूरे फ़ोल्डर के लिए `ptc` चुनें |
+| टूल मोड | `native` और `ptc` में काम करता है; पूरे फ़ोल्डर के लिए `ptc` चुनें |
 
 ## What it does
 

@@ -8,16 +8,16 @@
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.png)
 
-Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não é uma simulação. O pacote de regras não inventa citações, por isso cada achado nomeia a cláusula aplicada e avisa que o seu texto não foi obtido.
+Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não é uma simulação. O pacote de regras não inventa citações: cada achado nomeia o artigo aplicado, e cada `excerpt` é agora uma citação literal de um documento que este repositório leu.
 
 ## O que ele responde
 
 | Você pergunta | O que ele responde |
 |---|---|
-| Uma secção é só material e nenhuma conclusão: a coluna do ponto está vazia. | `PB-001` reporta essa secção, porque se espera que cada secção exponha o seu ponto. Verifica apenas que a célula `point` está preenchida, por isso não julga se o ponto está certo nem se acrescenta algo novo. A regra está limitada a `warn` porque o número do artigo não foi obtido. |
-| Preenchemos a coluna da evidência e a da fonte. O que é que a verificação confirma, afinal? | Apenas que ambas as células estão preenchidas. `PB-002` exige `evidence` para cada ponto e `PB-003` exige `sourceRef` ao lado dela. `PB-002` não julga se a evidência é suficiente, real ou se sustenta o ponto; `PB-003` não consegue verificar se a fonte existe nem se os dados coincidem com ela, porque o plugin lê a lista de verificação e nunca as fontes, pelo que uma citação inventada passa. |
-| A data-limite dos dados está escrita como `2026-03-15 09:30`, e uma secção tem uma data posterior a hoje. | As duas formas, `2026-03-15` e `2026-03-15 09:30`, são reconhecidas. `PB-004` reporta um `dataAsOf` posterior à data de revisão, ou seja, ou a data foi mal preenchida ou a secção cita dados que ainda não existem, e um valor que não consegue analisar é reportado à parte em vez de ser omitido em silêncio. Não julga se os dados são fiáveis. |
-| A regra de frescura reporta `skipped`. Isso significa que os dados estão bem? | Não. `PB-005` vem com `maxDays: 0`, ou seja, por configurar, por isso reporta-se em `skipped` em vez de inventar um número; configure `maxDays` (por exemplo `maxDays: 90`) para a ativar. Um achado significa então apenas que os dados são mais antigos do que a janela que definiu, nunca que sejam inutilizáveis, e citar dados antigos é por vezes correto, por isso diga porquê na observação. A regra é `info`. |
+| Uma secção é só material e nenhuma conclusão: a coluna do ponto está vazia. | `PB-001` reporta essa secção, porque se espera que cada secção exponha o seu ponto. Verifica apenas que a célula `point` está preenchida, por isso não julga se o ponto está certo nem se acrescenta algo novo. É um `error`: o artigo 19(3) exige 「观点鲜明」, e esse artigo foi lido literalmente em 2026-10-13. |
+| Preenchemos a coluna da evidência e a da fonte. O que é que a verificação confirma, afinal? | Apenas que ambas as células estão preenchidas. `PB-002` exige `evidence` para cada ponto e `PB-003` exige `sourceRef` ao lado dela. `PB-003` é um `error`, porque o artigo 20(4) inclui 「引文等是否准确」 entre os pontos de revisão antes da emissão; `PB-002` continua a ser um `warn`, porque nenhum artigo exige uma citação por ponto. `PB-002` não julga se a evidência é suficiente, real ou se sustenta o ponto; `PB-003` não consegue verificar se a fonte existe nem se os dados coincidem com ela, porque o plugin lê a lista de verificação e nunca as fontes, pelo que uma citação inventada passa. |
+| A data-limite dos dados está escrita como `2026-03-15 09:30`, e uma secção tem uma data posterior a hoje. | As duas formas, `2026-03-15` e `2026-03-15 09:30`, são reconhecidas. `PB-004` reporta um `dataAsOf` posterior à data de revisão, ou seja, ou a data foi mal preenchida ou a secção cita dados que ainda não existem, e um valor que não consegue analisar é reportado à parte em vez de ser omitido em silêncio. É um `error`: o artigo 19(2) exige 「分析问题实事求是」 e o artigo 20(4) exige que 「时间」 seja exato, e uma data-limite posterior à data de revisão não pode ser verdadeira. Não julga se os dados são fiáveis. |
+| A regra de frescura reporta `skipped`. Isso significa que os dados estão bem? | Não. `PB-005` vem com `maxDays: 0`, ou seja, por configurar, por isso reporta-se em `skipped` em vez de inventar um número; configure `maxDays` (por exemplo `maxDays: 90`) para a ativar. Um achado significa então apenas que os dados são mais antigos do que a janela que definiu, nunca que sejam inutilizáveis, e citar dados antigos é por vezes correto, por isso diga porquê na observação. A regra é `info`: a sua janela de dias vem do seu critério editorial e o regulamento não fixa qualquer número de dias. |
 | Uma secção apresenta uma recomendação mas não diz quem a executaria. | `PB-006` reporta essa secção: uma vez preenchida a célula `recommendation`, a célula `implementer` passa a ser exigida. Uma secção que apenas analisa a situação atual e não recomenda nada não é reportada, por isso a regra não incomoda as secções de diagnóstico. Verifica que o implementador é nomeado, não se a recomendação é viável nem se esse órgão é o adequado. |
 | O que deve o próprio relatório declarar, e pode o mesmo número de secção repetir-se? | `PB-007` exige que o cabeçalho declare `title` e `recipient`, e outros campos do cabeçalho, como a classificação ou o tema, podem ser acrescentados aos seus `fields` se o seu próprio formulário os registar. `PB-008` reporta um `sectionNo` que aparece duas vezes na tabela, ignorando espaços, porque um número repetido impede apontar um ponto sem ambiguidade. `PB-007` verifica apenas que essas células do cabeçalho estão preenchidas, não que o título seja acertado ou o destinatário o órgão certo, e `PB-008` compara apenas os números. |
 
@@ -25,7 +25,7 @@ Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não
 
 | Documento | Número | Regras que o citam |
 |---|---|---|
-| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（本次未取得条文） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（全文已取得，逐字回填至各条 `excerpt`） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
 **Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
 each section states its point, that a point has supporting evidence, that the evidence cites a source, that the
@@ -47,11 +47,31 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 > brief a superior body), article 19 (drafting: 「分析问题实事求是」「所提政策措施和办法切实可行」「观点鲜明」)
 > and article 20(4), which lists 「引文等是否准确」 as a review point before issuance.
 >
-> **The rule `excerpt` fields still say "本次未取得", and every rule remains `warn` or `info`.** The regulation
-> governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline* records its
-> points, evidence, sources and recommendations. Calling a blank column a `direct` breach of 「观点鲜明」 would
-> dress a register gap up as a regulatory one — the over-claim this family exists to avoid. Half the rules rest
-> on your own editorial conventions in any case.
+> **The clause text is now in the pack, and the severities were re-derived from it (2026-10-13).** The
+> regulation governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline*
+> records its points, evidence, sources and recommendations. Those are two different things, so the rule was
+> applied article by article rather than in bulk:
+>
+> - **Raised to `error`** where an article states the requirement the check looks for: `PB-001` (19(3)
+>   「观点鲜明」), `PB-003` (20(4) lists 「引文等是否准确」 as a pre-issuance review point) and `PB-004`
+>   (19(2) 「分析问题实事求是」 with 20(4) 「时间」 — a cutoff after the review date cannot be true).
+> - **Left at `warn` even though the text was obtained**, because the article is about something else:
+>   `PB-002` (no article requires one citation per point), `PB-006` (none requires naming an implementer),
+>   `PB-008` (none requires unique section numbers), and **`PB-007`**, whose article 9 governs the eighteen
+>   format elements of a formal document rather than two columns of a working outline — calling a blank header
+>   cell a `direct` breach of article 9 would dress a register gap up as a regulatory one.
+> - **Still `info`**: `PB-005`, whose window is your editorial convention and is not in the regulation at all.
+>
+> So **3 rules are `error`, 4 are `warn` and 1 is `info`** — the split is the point, not a compromise:
+> obtaining a text licenses a `direct` citation only where the text actually says the thing being checked.
+> See `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`, which also records where it disagrees with
+> the earlier analysis in `clause-verification.md`.
+>
+> **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
+> demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
+> `maxDays` starts at `0` and the rule reports itself in `skipped` rather than inventing a number. A finding
+> there means "older than the window you set", never "unusable"; citing older data is sometimes right, and the
+> fix is to say why in the remark.
 >
 > **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
 > demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
@@ -63,10 +83,10 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 
 | Superfície | Estado |
 |---|---|
-| Harness | Faixa de peers `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — verificada para aceitar tanto `0.2.0-rc.2` quanto `0.2.1-alpha.1`. **`engines.dsh` não é declarado**: não tem leitor e não pode recusar nenhum host |
+| Harness | Faixa de peers `>=0.1.2-rc.1 <0.2.0 \|\| >=0.2.0-0 <0.3.0` — verificada para aceitar tanto `0.2.0-rc.2` quanto `0.2.1-rc.2`. **`engines.dsh` é declarado como `>=0.2.1-0 <0.3.0`** e o host o aplica desde 0.2.1 |
 | Node | `^22.19.0 || >=24.0.0` |
 | Plataformas | Todas (ESM puro; sem código nativo, sem rede, sem chamada ao modelo) |
-| Modo de ferramenta | Funciona em `native`, `ptc` e `both`; para um diretório inteiro use `ptc` |
+| Modo de ferramenta | Funciona em `native` e `ptc`; para um diretório inteiro use `ptc` |
 
 ## What it does
 
