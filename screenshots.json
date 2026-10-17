@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-policy-brief-draft-hero.png",
+    "kind": "hero",
+    "alt": "dsh-policy-brief-draft terminal output",
+    "caption": "Real dsh-policy-brief-draft checker output; 31 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-policy-brief-draft-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-policy-brief-draft terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]

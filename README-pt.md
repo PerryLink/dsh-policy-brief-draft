@@ -6,7 +6,9 @@
 
 ## Como é a saída
 
-![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.png)
+![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
+
+![Animated terminal demo of dsh-policy-brief-draft](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.gif)
 
 Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não é uma simulação. O pacote de regras não inventa citações: cada achado nomeia o artigo aplicado, e cada `excerpt` é agora uma citação literal de um documento que este repositório leu.
 
