@@ -4,6 +4,13 @@
 
 `dsh-policy-brief-draft` reads one policy-brief outline — the document header plus one row per section — and checks that outline's own completeness and internal consistency: that each section states its point, that a point carries supporting evidence, that the evidence cites a source, that the data cutoff parses and is not later than the review date, that the figures fall inside the data-freshness window you configure, that a recommendation names who would implement it, that the header declares the brief's title and its recipient, and that no section number is repeated.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-policy-brief-draft
+dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
+```
+
 ## What it looks like
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
@@ -99,13 +106,6 @@ section — applies a versioned rule pack, and returns a report.
 | `PB-006` | a recommendation names its implementer | warn | principle |
 | `PB-007` | the brief names its title and recipient | warn | direct |
 | `PB-008` | section numbers are unique | warn | principle |
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-policy-brief-draft
-dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
-```
-
 ## Configuration
 
 | Key | Type | Default | Description |

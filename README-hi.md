@@ -4,6 +4,13 @@
 
 `dsh-policy-brief-draft` नीति ब्रीफ़ (या शोध-प्रतिवेदन) की तत्व-चेकलिस्ट पढ़ता है — दस्तावेज़ का हेडर और प्रत्येक खंड की एक पंक्ति — और उसी चेकलिस्ट की पूर्णता तथा आंतरिक सुसंगति जाँचता है: क्या हर खंड अपना मुख्य बिंदु लिखता है, क्या बिंदु के पास आधार है, क्या आधार में स्रोत दर्ज है, क्या डेटा की अंतिम तिथि पढ़ी जा सकती है और जाँच की तिथि से बाद की नहीं है, क्या आँकड़े आपकी तय की गई ताज़गी विंडो के भीतर हैं, क्या सिफ़ारिश में लिखा है कि उसे कौन लागू करेगा, क्या हेडर ब्रीफ़ का शीर्षक और प्राप्तकर्ता घोषित करता है, और क्या कोई खंड संख्या दोहराई नहीं गई है।
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-policy-brief-draft
+dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
+```
+
 ## आउटपुट कैसा दिखता है
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
@@ -93,13 +100,6 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 ## What it does
 
 नियम-सूची, फ़ील्ड और विस्तृत व्यवहार [README.md](README.md#what-it-does) (अंग्रेज़ी मुख्य संस्करण) में हैं। यह प्लगइन केवल उद्धृत धाराओं के सामने शाब्दिक अंतर सूचीबद्ध करता है और हर न चल पाई जाँच को `skipped` में बताता है।
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-policy-brief-draft
-dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
-```
 
 ## Configuration
 

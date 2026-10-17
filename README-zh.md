@@ -4,6 +4,13 @@
 
 `dsh-policy-brief-draft` 读取一份政策专报（或研究报告）要素核对表——文件表头加每节一行——核对这份表自身的齐备与自洽：每节是否写明核心观点、观点是否有支撑依据、依据是否注明出处、数据截止日期是否可解析且不晚于核对日、数据是否落在你配置的新鲜度窗口内、建议事项是否写明实施主体、表头是否声明专报标题与报送对象、要点序号是否重复。
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-policy-brief-draft
+dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
+```
+
 ## 实际输出长什么样
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
@@ -93,13 +100,6 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 ## What it does
 
 规则表、字段说明与行为细节见 [README.md](README.md#what-it-does)（英文主版本）。本插件只列出材料与所引条款之间的字面差异，并对无法执行的检查在 `skipped` 中逐项说明。
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-policy-brief-draft
-dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
-```
 
 ## Configuration
 

@@ -4,6 +4,13 @@
 
 `dsh-policy-brief-draft` lee una lista de verificación de elementos de un informe de política (o de un estudio) —la cabecera del documento más una fila por sección— y comprueba la completitud y la coherencia interna de esa lista: que cada sección exponga su punto, que un punto tenga evidencia de apoyo, que la evidencia cite una fuente, que la fecha de corte de los datos se pueda analizar y no sea posterior a la fecha de revisión, que los datos caigan dentro de la ventana de frescura que usted configure, que una recomendación nombre a quien la ejecutaría, que la cabecera declare el título y el destinatario del informe y que no se repita ningún número de sección.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-policy-brief-draft
+dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
+```
+
 ## Cómo se ve la salida
 
 ![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
@@ -93,13 +100,6 @@ whether a recommendation is feasible, whether the data is reliable, or whether t
 ## What it does
 
 La tabla de reglas, los campos y el comportamiento detallado están en [README.md](README.md#what-it-does) (versión principal en inglés). El plugin sólo enumera divergencias literales frente a las cláusulas citadas e indica en `skipped` cada comprobación que no pudo ejecutarse.
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-policy-brief-draft
-dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
-```
 
 ## Configuration
 
