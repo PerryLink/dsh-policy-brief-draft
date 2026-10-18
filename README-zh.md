@@ -40,49 +40,23 @@ dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 
 **边界（中文译文，以英文原文为准）：** 本插件核对一份 **政策专报要素核对表** 中可被机械核对的部分——每节是否写明核心观点，观点是否有支撑依据，依据是否注明出处，数据截止日期是否可解析且不在未来，数据在你配置的窗口内是否足够新鲜，建议事项是否写明实施主体，专报是否写明标题与报送对象，以及要点序号是否唯一。它**不**判定观点是否正确、依据是否充分、建议是否可行、数据是否可靠，或专报是否应当报送。**这些是关于研究质量与决策价值的判断。**
 
-> ### ⚠️ What this plugin can and cannot see
+> ### ⚠️ 本插件能看到什么、不能看到什么（以英文原文为准）
 >
-> **It reads a checklist, not the sources or the data.** So it can only check that a source is *cited* — never
-> that the source exists or that the figures match it. `PB-003` says so in its own note, and the README's
-> troubleshooting section repeats it: a fabricated citation will pass, because verifying sources is a different
-> job.
+> **它读的是一份核对表，而不是出处或数据本身。** 因此它只能核对某个出处是否被*引用*——永远不能核对该出处是否存在，也不能核对数据是否与它一致。`PB-003` 在自身的 note 中写明了这一点，README 的排障一节也重申：编造的出处照样会通过，因为核实出处是另一件工作。
 >
-> **《党政机关公文处理工作条例》(中办发〔2012〕14号) was obtained and read verbatim**, and
-> `rules/evidence/clause-verification.md` records which articles were quoted — article 8(10) (a report serves to
-> brief a superior body), article 19 (drafting: 「分析问题实事求是」「所提政策措施和办法切实可行」「观点鲜明」)
-> and article 20(4), which lists 「引文等是否准确」 as a review point before issuance.
+> **《党政机关公文处理工作条例》（中办发〔2012〕14号）已取得并逐字读过**，`rules/evidence/clause-verification.md` 记录了引用了哪些条文——第八条第（十）项（报告用于向上级机关汇报工作）、第十九条（起草：「分析问题实事求是」「所提政策措施和办法切实可行」「观点鲜明」）以及第二十条第（四）项，该项把「引文等是否准确」列为签发前的审核重点。
 >
-> **The clause text is now in the pack, and the severities were re-derived from it (2026-10-13).** The
-> regulation governs how a document is *drafted and issued*; this plugin checks whether a brief's *outline*
-> records its points, evidence, sources and recommendations. Those are two different things, so the rule was
-> applied article by article rather than in bulk:
+> **条款原文现已进入规则库，严重级也据此重新推导（2026-10-13）。** 该条例规范的是文件如何*起草与签发*；本插件核对的是专报的*提纲*是否记录了其观点、依据、出处与建议。这是两回事，因此规则是逐条套用的，而不是整批套用：
 >
-> - **Raised to `error`** where an article states the requirement the check looks for: `PB-001` (19(3)
->   「观点鲜明」), `PB-003` (20(4) lists 「引文等是否准确」 as a pre-issuance review point) and `PB-004`
->   (19(2) 「分析问题实事求是」 with 20(4) 「时间」 — a cutoff after the review date cannot be true).
-> - **Left at `warn` even though the text was obtained**, because the article is about something else:
->   `PB-002` (no article requires one citation per point), `PB-006` (none requires naming an implementer),
->   `PB-008` (none requires unique section numbers), and **`PB-007`**, whose article 9 governs the eighteen
->   format elements of a formal document rather than two columns of a working outline — calling a blank header
->   cell a `direct` breach of article 9 would dress a register gap up as a regulatory one.
-> - **Still `info`**: `PB-005`, whose window is your editorial convention and is not in the regulation at all.
+> - **条文明文写出该检查所寻找的要求之处时，提升为 `error`**：`PB-001`（19(3)「观点鲜明」）、`PB-003`（20(4) 把「引文等是否准确」列为签发前审核重点）与 `PB-004`（19(2)「分析问题实事求是」配合 20(4)「时间」——晚于核对日的截止日期不可能成立）。
+> - **即使已取得原文，仍保持在 `warn`**，因为该条文讲的是另一件事：`PB-002`（没有条文要求每个观点必须附一条引文）、`PB-006`（没有条文要求写明实施主体）、`PB-008`（没有条文要求序号唯一），以及 **`PB-007`**——其第九条规范的是正式公文的十八个格式要素，而不是一份工作提纲的两栏：把一个空白的表头单元格说成对第九条的 `direct` 违反，等于把登记上的缺口包装成违规。
+> - **仍为 `info`**：`PB-005`，其窗口是你的编辑口径，条例中完全没有这项规定。
 >
-> So **3 rules are `error`, 4 are `warn` and 1 is `info`** — the split is the point, not a compromise:
-> obtaining a text licenses a `direct` citation only where the text actually says the thing being checked.
-> See `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`, which also records where it disagrees with
-> the earlier analysis in `clause-verification.md`.
+> 因此**3 条规则为 `error`、4 条为 `warn`、1 条为 `info`**——这种划分本身就是要点，不是折中：取得原文，只在原文确实写到了被核对之事的地方，才允许作 `direct` 引用。见 `rules/evidence/clause-verification-gongwen-tiaoli-direct.md`，该文件也记录了它与 `clause-verification.md` 中早先分析不一致之处。
 >
-> **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
-> demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
-> `maxDays` starts at `0` and the rule reports itself in `skipped` rather than inventing a number. A finding
-> there means "older than the window you set", never "unusable"; citing older data is sometimes right, and the
-> fix is to say why in the remark.
+> **数据新鲜度窗口出厂时未设置。** 多旧算太旧是你的编辑口径——一份快报可能要求上个月的数据，而一份年度分析引用全年数据也属正当——因此 `PB-005` 的 `maxDays` 从 `0` 起步，该规则会把自己记入 `skipped`，而不是编一个天数。此项命中意味着「比你设置的窗口更旧」，从不意味着「不可用」；引用较旧的数据有时是对的，解决办法是在备注中说明原因。
 >
-> **The data-freshness window ships unset.** How stale is too stale is your editorial rule — a quick brief may
-> demand last month's figures while an annual analysis legitimately cites the year's data — so `PB-005`'s
-> `maxDays` starts at `0` and the rule reports itself in `skipped` rather than inventing a number. A finding
-> there means "older than the window you set", never "unusable"; citing older data is sometimes right, and the
-> fix is to say why in the remark.
+> **数据新鲜度窗口出厂时未设置。** 多旧算太旧是你的编辑口径——一份快报可能要求上个月的数据，而一份年度分析引用全年数据也属正当——因此 `PB-005` 的 `maxDays` 从 `0` 起步，该规则会把自己记入 `skipped`，而不是编一个天数。此项命中意味着「比你设置的窗口更旧」，从不意味着「不可用」；引用较旧的数据有时是对的，解决办法是在备注中说明原因。
 
 ## Compatibility
 
