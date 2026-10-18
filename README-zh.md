@@ -38,13 +38,7 @@ dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 |---|---|---|
 | 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（全文已取得，逐字回填至各条 `excerpt`） | PB-001, PB-002, PB-003, PB-004, PB-005, PB-006, PB-007, PB-008 |
 
-**Boundary:** this plugin checks a **政策专报要素核对表** for what a brief can be held to mechanically — that
-each section states its point, that a point has supporting evidence, that the evidence cites a source, that the
-data date parses and is not in the future, that the figures are fresh enough under your window, that a
-recommendation names who would implement it, that the brief names its title and recipient, and that section
-numbers are unique. It does **not** decide whether a point is right, whether the evidence is sufficient,
-whether a recommendation is feasible, whether the data is reliable, or whether the brief should be submitted.
-**Those are judgements about research quality and decision value.**
+**边界（中文译文，以英文原文为准）：** 本插件核对一份 **政策专报要素核对表** 中可被机械核对的部分——每节是否写明核心观点，观点是否有支撑依据，依据是否注明出处，数据截止日期是否可解析且不在未来，数据在你配置的窗口内是否足够新鲜，建议事项是否写明实施主体，专报是否写明标题与报送对象，以及要点序号是否唯一。它**不**判定观点是否正确、依据是否充分、建议是否可行、数据是否可靠，或专报是否应当报送。**这些是关于研究质量与决策价值的判断。**
 
 > ### ⚠️ What this plugin can and cannot see
 >
