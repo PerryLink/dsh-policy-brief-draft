@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-policy-brief-draft?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-policy-brief-draft?ref=badge)
 
 `dsh-policy-brief-draft` lee una lista de verificación de elementos de un informe de política (o de un estudio) —la cabecera del documento más una fila por sección— y comprueba la completitud y la coherencia interna de esa lista: que cada sección exponga su punto, que un punto tenga evidencia de apoyo, que la evidencia cite una fuente, que la fecha de corte de los datos se pueda analizar y no sea posterior a la fecha de revisión, que los datos caigan dentro de la ventana de frescura que usted configure, que una recomendación nombre a quien la ejecutaría, que la cabecera declare el título y el destinatario del informe y que no se repita ningún número de sección.
 

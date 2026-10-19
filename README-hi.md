@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-policy-brief-draft?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-policy-brief-draft?ref=badge)
 
 `dsh-policy-brief-draft` नीति ब्रीफ़ (या शोध-प्रतिवेदन) की तत्व-चेकलिस्ट पढ़ता है — दस्तावेज़ का हेडर और प्रत्येक खंड की एक पंक्ति — और उसी चेकलिस्ट की पूर्णता तथा आंतरिक सुसंगति जाँचता है: क्या हर खंड अपना मुख्य बिंदु लिखता है, क्या बिंदु के पास आधार है, क्या आधार में स्रोत दर्ज है, क्या डेटा की अंतिम तिथि पढ़ी जा सकती है और जाँच की तिथि से बाद की नहीं है, क्या आँकड़े आपकी तय की गई ताज़गी विंडो के भीतर हैं, क्या सिफ़ारिश में लिखा है कि उसे कौन लागू करेगा, क्या हेडर ब्रीफ़ का शीर्षक और प्राप्तकर्ता घोषित करता है, और क्या कोई खंड संख्या दोहराई नहीं गई है।
 
