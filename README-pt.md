@@ -15,13 +15,18 @@ dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 
 ## Como é a saída
 
-![Terminal demo of dsh-policy-brief-draft: real output over its PB-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-hero.png)
+![Diagrama de fluxo de dsh-policy-brief-draft: chamada → plugin → resultado.](docs/assets/dsh-policy-brief-draft-flow.svg)
 
-![Animated terminal demo of dsh-policy-brief-draft](https://raw.githubusercontent.com/PerryLink/dsh-policy-brief-draft/main/docs/assets/dsh-policy-brief-draft-demo.gif)
+*Visão geral do fluxo: chamada → plugin → resultado. Os exemplos abaixo usam a superfície real de comandos.*
+
 
 Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não é uma simulação. O pacote de regras não inventa citações: cada achado nomeia o artigo aplicado, e cada `excerpt` é agora uma citação literal de um documento que este repositório leu.
 
 ## O que ele responde
+
+### Exemplos
+
+A tabela abaixo é o conjunto de exemplos: a primeira linha é o caso detalhado e as demais são casos curtos.
 
 | Você pergunta | O que ele responde |
 |---|---|
