@@ -28,6 +28,35 @@ dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 
 The table below is the example set: the first row is the detailed walkthrough, the remaining rows are short cases.
 
+#### Detailed output
+
+**Tool** `policy_brief_draft`
+
+**Input**
+
+~~~json
+{"title":"某某领域投资形势分析专报","rows":[{"序号":"1","章节":"一、现状","核心观点":"","支撑依据":"全国固定资产投资统计月报（2026 年 2 月）显示本领域投资同比增长 3.1%"}]}
+~~~
+ 
+**Output**
+
+~~~json
+{
+  "id": "dsh-policy-brief-draft.PB-001.de09b5a6",
+  "ruleId": "PB-001",
+  "severity": "error",
+  "locator": {
+    "row": 1,
+    "field": "point"
+  },
+  "found": "第 1 行「point」为空",
+  "expected": "「point」应填写",
+  "fix": "补填核心观点；本条只核对是否写明，不判断观点是否成立"
+}
+~~~
+
+*Observed from `dsh-policy-brief-draft/tests/fixtures/PB-001/PB-001-unsafe.json (cases.json expects 1×PB-001); executed parseMaterial+runCheck, checkedAt=2026-10-06T00:00:00.000Z`*
+
 | You ask | What it answers |
 |---|---|
 | One section is all material and no conclusion: the point column is empty. | `PB-001` reports that section, because every section is expected to state its point. It checks only that the `point` cell is filled, so it does not judge whether the point is right or whether it says anything new. It is an `error`: article 19(3) requires 「观点鲜明」, and that article was read verbatim on 2026-10-13. |

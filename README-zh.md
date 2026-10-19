@@ -29,6 +29,35 @@ dsh --profile <name> --dump-config | grep 'dsh-policy-brief-draft'
 
 下表是示例集：第一行是详细走查，其余行是简短案例。
 
+#### 详细输出
+
+**工具** `policy_brief_draft`
+
+**输入**
+
+~~~json
+{"title":"某某领域投资形势分析专报","rows":[{"序号":"1","章节":"一、现状","核心观点":"","支撑依据":"全国固定资产投资统计月报（2026 年 2 月）显示本领域投资同比增长 3.1%"}]}
+~~~
+ 
+**输出**
+
+~~~json
+{
+  "id": "dsh-policy-brief-draft.PB-001.de09b5a6",
+  "ruleId": "PB-001",
+  "severity": "error",
+  "locator": {
+    "row": 1,
+    "field": "point"
+  },
+  "found": "第 1 行「point」为空",
+  "expected": "「point」应填写",
+  "fix": "补填核心观点；本条只核对是否写明，不判断观点是否成立"
+}
+~~~
+
+*来源 `dsh-policy-brief-draft/tests/fixtures/PB-001/PB-001-unsafe.json (cases.json expects 1×PB-001); executed parseMaterial+runCheck, checkedAt=2026-10-06T00:00:00.000Z`*
+
 | 你会问 | 它怎么答 |
 |---|---|
 | 有一节全是材料、没有结论，观点栏是空的。 | `PB-001` 会报出这一节：每节都应写明核心观点。它只核对 `point` 栏是否填写，因此不判断观点是否正确、是否有新意。本条为 `error`：第十九条（三）明文要求「观点鲜明」，该条已于 2026-10-13 逐字取得。 |

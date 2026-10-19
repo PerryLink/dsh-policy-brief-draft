@@ -29,6 +29,35 @@ Saída real deste plugin sobre o seu próprio fixture de teste `PB-001` — não
 
 A tabela abaixo é o conjunto de exemplos: a primeira linha é o caso detalhado e as demais são casos curtos.
 
+#### Saída detalhada
+
+**Ferramenta** `policy_brief_draft`
+
+**Entrada**
+
+~~~json
+{"title":"某某领域投资形势分析专报","rows":[{"序号":"1","章节":"一、现状","核心观点":"","支撑依据":"全国固定资产投资统计月报（2026 年 2 月）显示本领域投资同比增长 3.1%"}]}
+~~~
+ 
+**Saída**
+
+~~~json
+{
+  "id": "dsh-policy-brief-draft.PB-001.de09b5a6",
+  "ruleId": "PB-001",
+  "severity": "error",
+  "locator": {
+    "row": 1,
+    "field": "point"
+  },
+  "found": "第 1 行「point」为空",
+  "expected": "「point」应填写",
+  "fix": "补填核心观点；本条只核对是否写明，不判断观点是否成立"
+}
+~~~
+
+*Observado em `dsh-policy-brief-draft/tests/fixtures/PB-001/PB-001-unsafe.json (cases.json expects 1×PB-001); executed parseMaterial+runCheck, checkedAt=2026-10-06T00:00:00.000Z`*
+
 | Você pergunta | O que ele responde |
 |---|---|
 | Uma secção é só material e nenhuma conclusão: a coluna do ponto está vazia. | `PB-001` reporta essa secção, porque se espera que cada secção exponha o seu ponto. Verifica apenas que a célula `point` está preenchida, por isso não julga se o ponto está certo nem se acrescenta algo novo. É um `error`: o artigo 19(3) exige 「观点鲜明」, e esse artigo foi lido literalmente em 2026-10-13. |
