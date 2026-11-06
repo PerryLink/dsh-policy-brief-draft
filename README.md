@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-dark.svg">
-  <img src="docs/assets/dsh-policy-brief-draft-flow-light.svg" width="100%" alt="dsh-policy-brief-draft 工作流：政策专报要素核对表（JSON/YAML）→ parseMaterial 读取（表头 + rows[]）→ PB-001…PB-008 规则包 → runCheck → 报告（found/expected/fix + skipped）；只列差异，原件只读">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-policy-brief-draft-hero-zh-light.webp" width="100%" alt="dsh-policy-brief-draft 配图：上方是一份要素核对表（表头 title / recipient / draftedAt / classification，第 1 行核心观点为空，支撑依据与数据截止 2026-02-28 已填）；中间按依据类型分成三档天花板——direct 的 PB-001/003/004/007 封顶 error，derived-from-principle 的 PB-002/006/008 封顶 warn，institutional-configuration 的 PB-005 封顶 info（maxDays=0 即 skipped）；下方是 PB-001 差异卡（第 1 行 point 为空）与 skipped 2 条">
 </picture>
 
 # dsh-policy-brief-draft
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
 ## 它是什么
 
 `dsh-policy-brief-draft` 读取一份政策专报（或研究报告）要素核对表——文件表头加上每节一行——核对这份表自身的齐备与自洽：每节是否写明核心观点、观点是否有支撑依据、依据是否注明出处、数据截止日期是否可解析且不晚于核对日、数据是否落在你配置的新鲜度窗口内、建议事项是否写明实施主体、表头是否声明专报标题与报送对象、要点序号是否重复。它返回一份「哪一行、哪一栏、差什么」的差异清单，不改原件、不联网、不调用模型；不判定观点是否正确、依据是否充分、建议是否可行、数据是否可靠、专报是否应当报送——那是研究质量与决策价值的判断，也是本插件刻意不碰的部分。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="dsh-policy-brief-draft 结构图：左侧输入是一份要素核对表（表头 title / recipient / draftedAt / classification，行里核心观点、支撑依据、出处、数据截止、建议事项、实施主体、序号、章节、风险提示、撰稿人）；中间是规则包 8 条，按依据类型封顶成三层——direct 封顶 error、derived-from-principle 封顶 warn、institutional-configuration 封顶 info，PB-005 因 maxDays=0 进 skipped；右侧报告有 summary（error 1 / warn 0 / info 0）、issues[]（PB-001 报第 1 行 point 为空）与 skipped[]（PB-005、PB-006）；底部注明原件只读、不作定性结论">
+</picture>
 
 ## 三步上手
 
@@ -295,7 +300,7 @@ pnpm run check:readmes   # 五语 README 一致性
 node ../scripts/sync-shared.mjs dsh-policy-brief-draft   # 从 ../_shared 刷新 src/shared
 ```
 
-插件是 data-only：`src/model.ts` 声明表形，共享 kit 提供读取器与检查引擎，规则包声明每一条检查。规则包是数据不是代码：改 `rules/*.yaml` 即切换规则集，无需动 TypeScript；规则包在加载期校验，而非被信任。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；本插件无 UI，hero 为手绘 SVG 流程图（深浅双版，图内仅命令面 token）。
+插件是 data-only：`src/model.ts` 声明表形，共享 kit 提供读取器与检查引擎，规则包声明每一条检查。规则包是数据不是代码：改 `rules/*.yaml` 即切换规则集，无需动 TypeScript；规则包在加载期校验，而非被信任。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；本插件无 UI，hero 为程序合成的 1440×576 横幅（中英 × 深浅四版），结构图 `docs/assets/dsh-policy-brief-draft-flow-v5-light.svg` 为手写 SVG（深浅双版，图内仅命令面 token）。
 
 Topics：`dsh`, `dsh-plugin`, `deepseek-harness`, `cordis`, `policy`, `brief`, `draft`
 

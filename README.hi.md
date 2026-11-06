@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-dark.svg">
-  <img src="docs/assets/dsh-policy-brief-draft-flow-light.svg" width="100%" alt="dsh-policy-brief-draft का कार्यप्रवाह: नीति-ब्रीफ़ तत्व-चेकलिस्ट (JSON/YAML) → parseMaterial (हेडर + rows[]) → नियम-पैक PB-001…PB-008 → runCheck → रिपोर्ट (found/expected/fix + skipped); केवल अंतर, मूल फ़ाइल केवल पढ़ने के लिए">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-hero-en-dark.webp">
+  <img src="docs/assets/dsh-policy-brief-draft-hero-en-light.webp" width="100%" alt="dsh-policy-brief-draft चित्र: ऊपर ब्रीफ़ की तत्व-चेकलिस्ट (हेडर title / recipient / draftedAt / classification; पंक्ति 1 में मुख्य बिंदु खाली है, आधार भरा है, डेटा 2026-02-28 तक); बीच में आधार-प्रकार के तीन सीलिंग — direct PB-001/003/004/007 की सीमा error, derived-from-principle PB-002/006/008 की सीमा warn, institutional-configuration PB-005 की सीमा info (maxDays=0 यानी skipped); नीचे PB-001 का निष्कर्ष कार्ड (पंक्ति 1, point खाली) और skipped 2">
 </picture>
 
 # dsh-policy-brief-draft
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
 ## यह क्या है
 
 `dsh-policy-brief-draft` नीति ब्रीफ़ (या शोध-प्रतिवेदन) की तत्व-चेकलिस्ट पढ़ता है — दस्तावेज़ का हेडर और प्रत्येक खंड की एक पंक्ति — और उसी चेकलिस्ट की पूर्णता तथा आंतरिक संगति जाँचता है: क्या हर खंड अपना मुख्य बिंदु लिखता है, क्या बिंदु के पास आधार है, क्या आधार में स्रोत दर्ज है, क्या डेटा की अंतिम तिथि पढ़ी जा सकती है और जाँच की तिथि से बाद की नहीं है, क्या आँकड़े आपकी तय की गई ताज़गी विंडो के भीतर हैं, क्या सिफ़ारिश में लिखा है कि उसे कौन लागू करेगा, क्या हेडर ब्रीफ़ का शीर्षक और प्राप्तकर्ता घोषित करता है, और क्या कोई खंड संख्या दोहराई नहीं गई है। यह बताता है कि क्या असंगत है, कहाँ है और क्या सुधारना है; मूल फ़ाइल कभी नहीं बदलता, कोई नेटवर्क अनुरोध नहीं करता और किसी मॉडल को नहीं बुलाता। यह तय नहीं करता कि बिंदु सही है, आधार पर्याप्त है, सिफ़ारिश व्यावहारिक है, डेटा भरोसेमंद है या ब्रीफ़ भेजा जाना चाहिए — वे शोध-गुणवत्ता और निर्णय-मूल्य के निर्णय हैं, और जानबूझकर इसके दायरे से बाहर हैं।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="dsh-policy-brief-draft की संरचना: बाईं ओर तत्व-चेकलिस्ट (हेडर title / recipient / draftedAt / classification और rows[] में point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); बीच में 8 नियम तीन सीलिंग के नीचे — direct की सीमा error, derived-from-principle की सीमा warn, institutional-configuration की सीमा info, और PB-005 maxDays=0 होने पर skipped; दाईं ओर रिपोर्ट में summary (error 1 / warn 0 / info 0), issues[] में PB-001 पंक्ति 1 का point खाली बताता है, और skipped[] में PB-005 व PB-006; नीचे लिखा है कि मूल फ़ाइल केवल पढ़ने के लिए है और निर्णय समीक्षक का है">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -295,7 +300,7 @@ pnpm run check:readmes   # पाँच भाषाओं के README की 
 node ../scripts/sync-shared.mjs dsh-policy-brief-draft   # ../_shared से src/shared ताज़ा करें
 ```
 
-प्लगइन data-only है: `src/model.ts` तालिका का आकार घोषित करता है, साझा किट पढ़ने वाला और जाँच-इंजन देता है, और नियम-पैक हर जाँच घोषित करता है। नियम-पैक डेटा है, कोड नहीं: `rules/*.yaml` बदलने से TypeScript छुए बिना नियम-समुच्चय बदल जाता है, और पैक लोड पर सत्यापित होता है, मान लिया नहीं जाता। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से कार्यक्रमानुसार बनती हैं और दोबारा चलाई जा सकती हैं; इस प्लगइन में UI नहीं है, इसलिए hero हाथ से लिखा SVG कार्यप्रवाह आरेख है (लाइट और डार्क, केवल कमांड-सतह टोकन)।
+प्लगइन data-only है: `src/model.ts` तालिका का आकार घोषित करता है, साझा किट पढ़ने वाला और जाँच-इंजन देता है, और नियम-पैक हर जाँच घोषित करता है। नियम-पैक डेटा है, कोड नहीं: `rules/*.yaml` बदलने से TypeScript छुए बिना नियम-समुच्चय बदल जाता है, और पैक लोड पर सत्यापित होता है, मान लिया नहीं जाता। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से कार्यक्रमानुसार बनती हैं और दोबारा चलाई जा सकती हैं; इस प्लगइन में UI नहीं है, इसलिए hero कार्यक्रमानुसार बना 1440×576 बैनर है (zh/en × लाइट/डार्क) और संरचना आरेख `docs/assets/dsh-policy-brief-draft-flow-v5-light.svg` हाथ से लिखा SVG है (लाइट और डार्क, केवल कमांड-सतह टोकन)।
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `cordis`, `policy`, `brief`, `draft`
 

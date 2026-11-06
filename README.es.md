@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-dark.svg">
-  <img src="docs/assets/dsh-policy-brief-draft-flow-light.svg" width="100%" alt="Flujo de dsh-policy-brief-draft: lista de verificación del informe de política (JSON/YAML) → parseMaterial (cabecera + rows[]) → paquete de reglas PB-001…PB-008 → runCheck → informe (found/expected/fix + skipped); solo diferencias, el original es de solo lectura">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-hero-en-dark.webp">
+  <img src="docs/assets/dsh-policy-brief-draft-hero-en-light.webp" width="100%" alt="Imagen de dsh-policy-brief-draft: arriba, la lista de verificación de elementos del informe (cabecera title / recipient / draftedAt / classification; la fila 1 tiene el punto clave vacío, la evidencia rellena y los datos a 2026-02-28); en el centro, los tres techos por tipo de respaldo — direct PB-001/003/004/007 con techo error, derived-from-principle PB-002/006/008 con techo warn, institutional-configuration PB-005 con techo info (maxDays=0 implica skipped); abajo, la tarjeta del hallazgo PB-001 (fila 1, point vacío) y skipped 2">
 </picture>
 
 # dsh-policy-brief-draft
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
 ## Qué es
 
 `dsh-policy-brief-draft` lee una lista de verificación de elementos de un informe de política (o de un estudio) —la cabecera del documento más una fila por sección— y comprueba la completitud y la coherencia interna de esa lista: que cada sección exponga su punto, que un punto tenga evidencia de apoyo, que la evidencia cite una fuente, que la fecha de corte de los datos se pueda analizar y no sea posterior a la fecha de revisión, que los datos caigan dentro de la ventana de frescura que usted configure, que una recomendación nombre a quien la llevaría a cabo, que la cabecera declare el título del informe y su destinatario, y que no se repita ningún número de sección. Devuelve la lista de lo que es incoherente, dónde y qué corregir; no modifica el original, no hace peticiones de red y no llama a ningún modelo. No decide si un punto es correcto, si la evidencia es suficiente, si una recomendación es viable, si los datos son fiables o si el informe debe presentarse: esos son juicios sobre la calidad de la investigación y el valor para la decisión, y quedan deliberadamente fuera de su alcance.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="Estructura de dsh-policy-brief-draft: a la izquierda, la lista de verificación (cabecera title / recipient / draftedAt / classification y rows[] con point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); en el centro, las 8 reglas apiladas bajo sus tres techos — direct con techo error, derived-from-principle con techo warn, institutional-configuration con techo info, y PB-005 en skipped mientras maxDays=0; a la derecha, el informe con summary (error 1 / warn 0 / info 0), issues[] con PB-001 señalando la fila 1 con point vacío y skipped[] con PB-005 y PB-006; el pie recuerda que el original es de solo lectura y que la conclusión queda en manos de quien revisa">
+</picture>
 
 ## Instalación en tres pasos
 
@@ -295,7 +300,7 @@ pnpm run check:readmes   # coherencia de los README en cinco idiomas
 node ../scripts/sync-shared.mjs dsh-policy-brief-draft   # refrescar src/shared desde ../_shared
 ```
 
-El plugin es solo datos: `src/model.ts` declara la forma de la tabla, el kit compartido aporta el lector y el motor de comprobación, y el paquete de reglas declara cada comprobación. El paquete de reglas es dato, no código: sustituir `rules/*.yaml` cambia el conjunto de reglas sin tocar TypeScript, y el paquete se valida al cargar en lugar de darse por bueno. Las imágenes del README las genera por programa [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) y se pueden volver a ejecutar; este plugin no tiene UI, así que el hero es un diagrama de flujo SVG escrito a mano (claro y oscuro, solo tokens de la superficie de comandos).
+El plugin es solo datos: `src/model.ts` declara la forma de la tabla, el kit compartido aporta el lector y el motor de comprobación, y el paquete de reglas declara cada comprobación. El paquete de reglas es dato, no código: sustituir `rules/*.yaml` cambia el conjunto de reglas sin tocar TypeScript, y el paquete se valida al cargar en lugar de darse por bueno. Las imágenes del README las genera por programa [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) y se pueden volver a ejecutar; este plugin no tiene UI, así que el hero es un banner de 1440×576 generado por programa (zh/en × claro/oscuro) y el diagrama de estructura `docs/assets/dsh-policy-brief-draft-flow-v5-light.svg` es un SVG escrito a mano (claro y oscuro, solo tokens de la superficie de comandos).
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `cordis`, `policy`, `brief`, `draft`
 

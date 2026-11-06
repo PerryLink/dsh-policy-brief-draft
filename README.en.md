@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-dark.svg">
-  <img src="docs/assets/dsh-policy-brief-draft-flow-light.svg" width="100%" alt="dsh-policy-brief-draft workflow: policy-brief checklist (JSON/YAML) → parseMaterial (header + rows[]) → rule pack PB-001…PB-008 → runCheck → report (found/expected/fix + skipped); differences only, the source is read-only">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-hero-en-dark.webp">
+  <img src="docs/assets/dsh-policy-brief-draft-hero-en-light.webp" width="100%" alt="dsh-policy-brief-draft hero: a brief element checklist on top (header title / recipient / draftedAt / classification; row 1 has a blank key point, evidence filled, data as of 2026-02-28); the middle stacks the three evidence-kind ceilings — direct PB-001/003/004/007 capped at error, derived-from-principle PB-002/006/008 capped at warn, institutional-configuration PB-005 capped at info (maxDays=0 means skipped); the bottom is the PB-001 finding card (row 1 point blank) plus skipped 2">
 </picture>
 
 # dsh-policy-brief-draft
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
 ## What it is
 
 `dsh-policy-brief-draft` reads one policy-brief (or research-report) element checklist — the document header plus one row per section — and checks that checklist's own completeness and internal consistency: that each section states its point, that a point carries supporting evidence, that the evidence cites a source, that the data cutoff parses and is not later than the review date, that the figures fall inside the data-freshness window you configure, that a recommendation names who would implement it, that the header declares the brief's title and its recipient, and that no section number is repeated. It returns the list of what is inconsistent, where, and what to fix; the source file is never modified, it makes no network request and calls no model. It does not decide whether a point is right, whether the evidence is sufficient, whether a recommendation is feasible, whether the data is reliable, or whether the brief should be submitted: those are judgements about research quality and decision value, and they are deliberately out of scope.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-policy-brief-draft-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="dsh-policy-brief-draft structure: the left input is the brief checklist (header title / recipient / draftedAt / classification, plus rows[] carrying point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); the middle stacks the 8-rule pack under its three severity ceilings — direct capped at error, derived-from-principle capped at warn, institutional-configuration capped at info, with PB-005 skipped while maxDays=0; the right-hand report carries summary (error 1 / warn 0 / info 0), issues[] with PB-001 reporting row 1 point blank, and skipped[] listing PB-005 and PB-006; the footer keeps the source read-only and the verdict human">
+</picture>
 
 ## Three-step setup
 
@@ -295,7 +300,7 @@ pnpm run check:readmes   # five-language README consistency
 node ../scripts/sync-shared.mjs dsh-policy-brief-draft   # refresh src/shared from ../_shared
 ```
 
-The plugin is data-only: `src/model.ts` declares the table shape, the shared kit supplies the reader and the check engine, and the rule pack declares every check. The rule pack is data, not code: replacing `rules/*.yaml` switches the rule set without touching TypeScript, and the pack is validated on load rather than trusted. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run; this plugin has no UI, so the hero is a hand-written SVG workflow diagram (light and dark, command-surface tokens only).
+The plugin is data-only: `src/model.ts` declares the table shape, the shared kit supplies the reader and the check engine, and the rule pack declares every check. The rule pack is data, not code: replacing `rules/*.yaml` switches the rule set without touching TypeScript, and the pack is validated on load rather than trusted. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run; this plugin has no UI, so the hero is a rendered 1440×576 banner (zh/en × light/dark) and the structure diagram `docs/assets/dsh-policy-brief-draft-flow-v5-light.svg` is a hand-written SVG pair (light and dark, command-surface tokens only).
 
 Topics: `dsh`, `dsh-plugin`, `deepseek-harness`, `cordis`, `policy`, `brief`, `draft`
 
