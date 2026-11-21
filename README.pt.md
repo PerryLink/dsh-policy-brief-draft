@@ -43,6 +43,11 @@ O `dsh-policy-brief-draft` lê uma lista de verificação de elementos de um rel
   <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-policy-brief-draft: à esquerda, a lista de verificação (cabeçalho title / recipient / draftedAt / classification e rows[] com point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); no centro, as 8 regras empilhadas sob os três tetos — direct com teto error, derived-from-principle com teto warn, institutional-configuration com teto info, e PB-005 em skipped enquanto maxDays=0; à direita, o relatório com summary (error 1 / warn 0 / info 0), issues[] com PB-001 apontando a linha 1 com point vazio e skipped[] com PB-005 e PB-006; o rodapé lembra que o original é somente leitura e que a conclusão fica com quem revisa">
 </picture>
 
+![dsh-policy-brief-draft: execução real de terminal](docs/assets/dsh-policy-brief-draft-demo.gif)
+
+*Repetição animada de uma execução real registrada neste repositório.*
+
+
 ## Instalação em três passos
 
 1. **Instalar**:

@@ -116,6 +116,10 @@ brief checklist (JSON/YAML) ──policy_brief_draft──▶ rule pack PB-001�
 
 ### Examples
 
+![dsh-policy-brief-draft: real terminal run](docs/assets/dsh-policy-brief-draft-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
 These are the plugin's real entry points; install once, then call one. The output below is the plugin's real run against its own `PB-001` test fixture, not an illustration.
 
 **Detailed output** — tool `policy_brief_draft`, input:

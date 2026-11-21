@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
   <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="Estructura de dsh-policy-brief-draft: a la izquierda, la lista de verificación (cabecera title / recipient / draftedAt / classification y rows[] con point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); en el centro, las 8 reglas apiladas bajo sus tres techos — direct con techo error, derived-from-principle con techo warn, institutional-configuration con techo info, y PB-005 en skipped mientras maxDays=0; a la derecha, el informe con summary (error 1 / warn 0 / info 0), issues[] con PB-001 señalando la fila 1 con point vacío y skipped[] con PB-005 y PB-006; el pie recuerda que el original es de solo lectura y que la conclusión queda en manos de quien revisa">
 </picture>
 
+![dsh-policy-brief-draft: ejecución real de terminal](docs/assets/dsh-policy-brief-draft-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instalar**:

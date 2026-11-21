@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
   <img src="docs/assets/dsh-policy-brief-draft-flow-v5-light.svg" width="100%" alt="dsh-policy-brief-draft की संरचना: बाईं ओर तत्व-चेकलिस्ट (हेडर title / recipient / draftedAt / classification और rows[] में point, evidence, sourceRef, dataAsOf, recommendation, implementer, sectionNo, section, risk, drafter); बीच में 8 नियम तीन सीलिंग के नीचे — direct की सीमा error, derived-from-principle की सीमा warn, institutional-configuration की सीमा info, और PB-005 maxDays=0 होने पर skipped; दाईं ओर रिपोर्ट में summary (error 1 / warn 0 / info 0), issues[] में PB-001 पंक्ति 1 का point खाली बताता है, और skipped[] में PB-005 व PB-006; नीचे लिखा है कि मूल फ़ाइल केवल पढ़ने के लिए है और निर्णय समीक्षक का है">
 </picture>
 
+![dsh-policy-brief-draft का असली टर्मिनल रन](docs/assets/dsh-policy-brief-draft-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 ## तीन चरणों में शुरुआत
 
 1. **इंस्टॉल करें**:
