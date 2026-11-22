@@ -7,6 +7,8 @@
 
 # dsh-policy-brief-draft
 
+Current version `0.2.14`.
+
 **Check a policy brief element by element — completeness and data freshness — and get back which row, which column and what is missing, with the verdict left to the reviewer.**
 
 A DeepSeek Harness checker for policy researchers and drafting offices: give it a policy-brief element checklist (a document header plus one row per section), and a rule pack with verbatim citations (PB-001…PB-008) lists only the differences the material itself can point to — the source is never modified, it makes no network request and calls no model.
