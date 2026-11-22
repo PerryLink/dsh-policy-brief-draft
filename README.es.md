@@ -11,6 +11,8 @@
 
 Un plugin de verificación para DeepSeek Harness, pensado para investigadores de políticas y oficinas de redacción: entra una lista de verificación de elementos del informe (la cabecera del documento más una fila por sección), y un paquete de reglas con citas literales (PB-001…PB-008) enumera solo las divergencias que el propio material permite señalar —sin tocar el original, sin peticiones de red y sin llamar a ningún modelo.
 
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -46,7 +48,6 @@ dsh plugin --profile <name> add dsh-policy-brief-draft
 ![dsh-policy-brief-draft: ejecución real de terminal](docs/assets/dsh-policy-brief-draft-demo.gif)
 
 *Repetición animada de una ejecución real registrada en este repositorio.*
-
 
 ## Instalación en tres pasos
 
